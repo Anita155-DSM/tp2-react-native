@@ -18,12 +18,13 @@ function PokemonForm({ onSubmit, pokemonToEdit, clearEdit }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
+    <form onSubmit={handleSubmit} className="pokemon-form">
       <input 
         type="text" 
         placeholder="Nombre" 
         value={formData.name} 
         onChange={e => setFormData({...formData, name: e.target.value})} 
+        className="text-input"
         required 
       />
       <input 
@@ -31,6 +32,7 @@ function PokemonForm({ onSubmit, pokemonToEdit, clearEdit }) {
         placeholder="Tipo (ej. Fuego)" 
         value={formData.type} 
         onChange={e => setFormData({...formData, type: e.target.value})} 
+        className="text-input"
         required 
       />
       <input 
@@ -38,10 +40,11 @@ function PokemonForm({ onSubmit, pokemonToEdit, clearEdit }) {
         placeholder="Nivel" 
         value={formData.level} 
         onChange={e => setFormData({...formData, level: Number(e.target.value)})} 
+        className="number-input"
         required 
       />
-      <button type="submit">{pokemonToEdit ? 'Actualizar' : 'Agregar'}</button>
-      {pokemonToEdit && <button type="button" onClick={clearEdit}>Cancelar</button>}
+      <button type="submit" className="btn btn-primary">{pokemonToEdit ? 'Actualizar' : 'Agregar'}</button>
+      {pokemonToEdit && <button type="button" onClick={clearEdit} className="btn btn-secondary">Cancelar</button>}
     </form>
   );
 }

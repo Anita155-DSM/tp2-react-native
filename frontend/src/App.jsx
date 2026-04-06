@@ -67,11 +67,11 @@ function App() {
   );
 
   return (
-    <div style={{ padding: '20px', maxWidth: '800px', margin: 'auto' }}>
-      <h1>Gestión de Equipo Pokémon</h1>
+    <div className="app-shell">
+      <h1 className="app-title">Gestión de Equipo Pokémon</h1>
       
       {/* Mostrar estado de error */}
-      {error && <div style={{ color: 'red', marginBottom: '10px' }}>Error: {error}</div>}
+      {error && <div className="error-banner">Error: {error}</div>}
       
       <PokemonForm 
         onSubmit={handleAddOrUpdate} 
@@ -79,13 +79,13 @@ function App() {
         clearEdit={() => setPokemonToEdit(null)} 
       />
       
-      <hr />
+      <hr className="section-divider" />
       
       <SearchFilter searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
       {/* Mostrar estado de carga */}
       {loading ? (
-        <p>Cargando Pokémon...</p>
+        <p className="loading-text">Cargando Pokémon...</p>
       ) : (
         <PokemonList 
           pokemons={filteredPokemons} 
