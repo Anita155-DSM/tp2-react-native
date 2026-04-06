@@ -71,3 +71,4 @@ tp2-react-native/
             |-- PokemonList.jsx
             `-- SearchFilter.jsx
 ```
+## Autor: PEREZ ANAHI JACQUELINE
