@@ -3,7 +3,7 @@ import PokemonForm from './components/PokemonForm';
 import PokemonList from './components/PokemonList';
 import SearchFilter from './components/SearchFilter';
 
-const API_URL = 'http://localhost:3000/api/pokemons';
+const API_URL = '/api/pokemons';
 
 function App() {
   const [pokemons, setPokemons] = useState([]);

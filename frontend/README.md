@@ -1,5 +1,16 @@
 # React + Vite
 
+## Conexion con backend
+
+Este frontend consume la API en la ruta relativa `/api/pokemons`.
+En desarrollo, Vite redirige automaticamente `/api` al backend en `http://localhost:4000` usando `server.proxy`.
+
+Pasos simples:
+
+1. Levantar backend en puerto 4000.
+2. Levantar frontend con `npm run dev`.
+3. Usar la app normalmente; las llamadas CRUD van al backend sin cambiar el codigo del frontend.
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:
