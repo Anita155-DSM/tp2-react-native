@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useCallback } from 'react';
 import PokemonForm from './components/PokemonForm';
 import PokemonList from './components/PokemonList';
 import SearchFilter from './components/SearchFilter';
@@ -15,6 +15,17 @@ function App() {
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [pokemonToEdit, setPokemonToEdit] = useState(null);
+
+  // Referencia (antes, sin callback):
+  // <PokemonForm
+  //   pokemonToEdit={pokemonToEdit}
+  //   clearEdit={() => setPokemonToEdit(null)}
+  // />
+  
+
+  const clearEdit = useCallback(() => {
+    setPokemonToEdit(null);
+  }, []);
 
   useEffect(() => {
     fetchPokemons();
@@ -47,7 +58,7 @@ function App() {
       
       <PokemonForm 
         pokemonToEdit={pokemonToEdit} 
-        clearEdit={() => setPokemonToEdit(null)} 
+        clearEdit={clearEdit} 
       />
       
       <hr className="section-divider" />
