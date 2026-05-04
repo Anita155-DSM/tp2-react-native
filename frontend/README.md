@@ -11,6 +11,15 @@ Pasos simples:
 2. Levantar frontend con `npm run dev`.
 3. Usar la app normalmente; las llamadas CRUD van al backend sin cambiar el codigo del frontend.
 
+## Optimizaciones agregadas
+
+En esta version se agregaron dos optimizaciones simples para evitar trabajo innecesario en React:
+
+- `useMemo` en `PokemonList` para memoizar el filtrado de pokemones por busqueda.
+- `useCallback` en `App` para estabilizar la funcion `clearEdit` que se pasa a `PokemonForm`.
+
+Estas optimizaciones no cambian el comportamiento de la app; solo ayudan a evitar recalculos y recreacion de funciones cuando el estado de la interfaz cambia sin necesidad.
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:
