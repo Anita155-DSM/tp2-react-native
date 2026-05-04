@@ -1,12 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import PokemonForm from './components/PokemonForm';
 import PokemonList from './components/PokemonList';
 import SearchFilter from './components/SearchFilter';
+import { PokemonContext } from './context/PokemonContext';
 
 const API_URL = '/api/pokemons';
 
 function App() {
-  const [pokemons, setPokemons] = useState([]);
+  // Extraemos el dispatch del contexto global
+  const { dispatch } = useContext(PokemonContext);
+  
+  // Mantenemos solo estados locales de la interfaz (UI)
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
@@ -23,7 +27,9 @@ function App() {
       const res = await fetch(API_URL);
       if (!res.ok) throw new Error('Error al cargar los Pokémon');
       const data = await res.json();
-      setPokemons(data);
+
+      // Guardamos los datos en el estado global
+      dispatch({ type: 'SET_POKEMONS', payload: data });
       setError(null);
     } catch (err) {
       setError(err.message);
@@ -31,40 +37,6 @@ function App() {
       setLoading(false);
     }
   };
-
-  const handleAddOrUpdate = async (pokemonData) => {
-    try {
-      const method = pokemonToEdit ? 'PUT' : 'POST';
-      const url = pokemonToEdit ? `${API_URL}/${pokemonToEdit.id}` : API_URL;
-      
-      const res = await fetch(url, {
-        method,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(pokemonData)
-      });
-      
-      if (!res.ok) throw new Error('Error al guardar el Pokémon');
-      
-      fetchPokemons(); // Recargar datos
-      setPokemonToEdit(null);
-    } catch (err) {
-      setError(err.message);
-    }
-  };
-
-  const handleDelete = async (id) => {
-    try {
-      const res = await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
-      if (!res.ok) throw new Error('Error al eliminar');
-      fetchPokemons();
-    } catch (err) {
-      setError(err.message);
-    }
-  };
-
-  const filteredPokemons = pokemons.filter(p => 
-    p.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
 
   return (
     <div className="app-shell">
@@ -74,7 +46,6 @@ function App() {
       {error && <div className="error-banner">Error: {error}</div>}
       
       <PokemonForm 
-        onSubmit={handleAddOrUpdate} 
         pokemonToEdit={pokemonToEdit} 
         clearEdit={() => setPokemonToEdit(null)} 
       />
@@ -88,9 +59,8 @@ function App() {
         <p className="loading-text">Cargando Pokémon...</p>
       ) : (
         <PokemonList 
-          pokemons={filteredPokemons} 
-          onEdit={setPokemonToEdit} 
-          onDelete={handleDelete} 
+          searchTerm={searchTerm}
+          onEdit={setPokemonToEdit}
         />
       )}
     </div>
